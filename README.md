@@ -76,7 +76,7 @@ We use **Git** with the following branching model to streamline collaborative de
 |-----------------------|----------------------|
 | NK Ramanayaka         | `NavinduR2001`      |
 | HRNAR Senarath        | `Nipunsen2k00`     |
-| PDKP Gunawardhana     | `PDKP Gunawardhana`  |
+| PDKP Gunawardhana     | `Kavishka15055`  |
 | AMTA Bandara          | `ThisaraniAloka`       |
 | SWK Hansala           | `SWKHansala`        |
 
