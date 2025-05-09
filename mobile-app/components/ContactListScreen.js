@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import { db } from "../firebase";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -13,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function ContactListScreen({ navigation }) {
   const [contacts, setContacts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "contacts"), (snapshot) => {
@@ -26,29 +28,41 @@ export default function ContactListScreen({ navigation }) {
     return unsubscribe;
   }, []);
 
+  const filteredContacts = contacts.filter((contact) => {
+    const fullName = `${contact.firstName} ${contact.lastName}`.toLowerCase();
+    const query = searchQuery.toLowerCase();
+    return fullName.includes(query) || contact.mobileNumber.includes(query);
+  });
+
   return (
     <View style={styles.container}>
-      {/* Custom Header */}
+      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back-circle-outline" size={28} color="#fff" />
         </TouchableOpacity>
         <View style={styles.headerRight}>
           <Text style={styles.headerText}>waveword</Text>
-          <Image
-            source={require("../assets/logo.png")}
-            style={styles.logo}
-          />
+          <Image source={require("../assets/logo.png")} style={styles.logo} />
         </View>
       </View>
 
       {/* Title */}
       <Text style={styles.title}>Contacts</Text>
 
+      {/* Search Input */}
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search by name..."
+        placeholderTextColor="#999"
+        onChangeText={setSearchQuery}
+        value={searchQuery}
+      />
+
       {/* Contact List */}
       <View style={styles.contactListBox}>
         <ScrollView contentContainerStyle={styles.contactListScroll}>
-          {contacts.map((contact) => (
+          {filteredContacts.map((contact) => (
             <View key={contact.id} style={styles.contactItem}>
               <View style={styles.contactRow}>
                 <View>
@@ -105,11 +119,23 @@ const styles = StyleSheet.create({
     margin: 16,
     marginTop: 20,
   },
+  searchInput: {
+  height: 45,
+  borderColor: "#3D7DFF",   
+  borderWidth: 1.5,
+  borderRadius: 12,
+  marginHorizontal: 16,
+  paddingHorizontal: 12,
+  marginBottom: 10,
+  backgroundColor: "#f0f6ff", 
+  color: "#333",
+  fontSize: 16,
+  },
   contactListBox: {
     flex: 1,
     backgroundColor: "#4285F4",
     borderRadius: 30,
-    marginTop: 20,
+    marginTop: 10,
   },
   contactListScroll: {
     padding: 35,
@@ -137,7 +163,7 @@ const styles = StyleSheet.create({
   },
   horizontalLine: {
     borderBottomWidth: 1,
-    borderBottomColor: "#fff", 
+    borderBottomColor: "#fff",
     marginTop: 10,
   },
 });
