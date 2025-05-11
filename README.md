@@ -84,7 +84,8 @@ We use **Git** with the following branching model to streamline collaborative de
 
 ## 🎓 Supervision
 
-- **Mentor**: Mr. Thilina Wanniarachchi  
+- **Mentor**: Mr. Thilina Wanniarachchi
+   *Codegen International Pvt Ltd*
 - **Internal Supervisor**: Mrs. W.T.S. Somaweera  
   *Lecturer (Probationary), Sabaragamuwa University of Sri Lanka*
 
