@@ -23,37 +23,55 @@ export default function AddMemberScreen({ navigation }) {
   const [error, setError] = useState("");
 
   const handleAddMember = async () => {
-    if (firstName && lastName && mobileNumber) {
-      try {
-        const q = query(collection(db, "contacts"), where("mobileNumber", "==", mobileNumber));
-        const querySnapshot = await getDocs(q);
+  if (firstName && lastName && mobileNumber) {
+    try {
+      const userQuery = query(
+        collection(db, "users"),
+        where("mobile_number", "==", mobileNumber)
+      );
+      const userSnapshot = await getDocs(userQuery);
 
-        if (!querySnapshot.empty) {
-          setError("This phone number is already registered.");
-        } else {
-          const docRef = await addDoc(collection(db, "contacts"), {
-            firstName,
-            lastName,
-            mobileNumber,
-          });
-
-          await updateDoc(docRef, {
-            contactId: docRef.id,
-          });
-
-          setFirstName("");
-          setLastName("");
-          setMobileNumber("");
-          setError("");
-          navigation.navigate("ContactList");
-        }
-      } catch (error) {
-        console.error("Error adding member: ", error);
+      if (userSnapshot.empty) {
+        setError("This user is not registered in WaveWords.");
+        return;
       }
-    } else {
-      setError("All fields are required.");
+
+      const contactQuery = query(
+        collection(db, "contacts"),
+        where("mobileNumber", "==", mobileNumber)
+      );
+      const contactSnapshot = await getDocs(contactQuery);
+
+      if (!contactSnapshot.empty) {
+        setError("This phone number is already added to contacts.");
+        return;
+      }
+
+      const docRef = await addDoc(collection(db, "contacts"), {
+        firstName,
+        lastName,
+        mobileNumber,
+      });
+
+      await updateDoc(docRef, {
+        contactId: docRef.id,
+      });
+
+      setFirstName("");
+      setLastName("");
+      setMobileNumber("");
+      setError("");
+      navigation.navigate("ContactList");
+
+    } catch (error) {
+      console.error("Error adding member: ", error);
+      setError("An unexpected error occurred.");
     }
-  };
+  } else {
+    setError("All fields are required.");
+  }
+};
+
 
   return (
     <KeyboardAvoidingView
