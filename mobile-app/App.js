@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,9 +10,11 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Home from './components/Home';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
 
   const [fontsLoaded] = useFonts({
     'Inter-Reg': require('./assets/fonts/Inter_18pt-Regular.ttf'),
@@ -38,3 +41,4 @@ const styles = StyleSheet.create({
     flex: 1, 
   },
 });
+
