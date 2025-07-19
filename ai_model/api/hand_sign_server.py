@@ -74,15 +74,20 @@ class HandSignRecognizer:
             if results.multi_hand_landmarks:
                 for hand_landmarks in results.multi_hand_landmarks:
                     landmarks = self.extract_landmarks(hand_landmarks)
-                    
+
+                    # Prepare predictions for each model
+
+
                     sign_mapping = {
                         0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E',
                         5: 'F', 6: 'G', 7: 'H', 8: 'I', 9: 'J',
                         10: 'K', 11: 'L', 12: 'M', 13: 'N', 14: 'O',
                         15: 'P', 16: 'Q', 17: 'R', 18: 'S', 19: 'T',
                         20: 'U', 21: 'V', 22: 'W', 23: 'X', 24: 'Y', 25: 'Z'
-                    }
-                    
+
+
+                    # Predict using enhanced model
+
                     if self.model_landmark:
                         try:
                             landmark_pred = self.model_landmark.predict(landmarks.reshape(1, -1), verbose=0)
@@ -105,7 +110,10 @@ class HandSignRecognizer:
                 'predictions': predictions,
                 'hands_detected': len(predictions)
             }
-            
+
+            #default return if no hands detected
+
+
         except Exception as e:
             return {
                 'success': False,
