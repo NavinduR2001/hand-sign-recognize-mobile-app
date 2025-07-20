@@ -12,7 +12,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-// Updated Firebase imports - Modular API
+
 import { getAuth, signOut } from '@react-native-firebase/auth';
 import {
   getFirestore,
@@ -64,11 +64,11 @@ const Home = () => {
     }
   };
 
-  // Load data when component mounts
+  
   useEffect(() => {
     fetchUserData();
 
-    // Set up back handler
+   
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       Alert.alert(
         'Exit App',
