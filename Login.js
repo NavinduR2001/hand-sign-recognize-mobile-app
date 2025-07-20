@@ -6,30 +6,29 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-// Updated Firebase imports - Modular API
 import { getAuth, signInWithEmailAndPassword } from '@react-native-firebase/auth';
 
 export default function Login() {
   const navigation = useNavigation();
 
-  // State variables for mobile number, password, loading state, and password visibility
+ 
   const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Function to handle login
+
   const handleLogin = async () => {
     if (!mobileNumber || !password) {
       Alert.alert('Validation Error', 'Please enter both mobile number and password.');
       return;
     }
 
-    // Validate mobile number format (basic validation)
+    
     const fakeEmail = `${mobileNumber}@wavewords.com`;
     setLoading(true);
     
-    // Attempt to sign in with email and password using modular API
+    
     try {
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, fakeEmail, password);
@@ -46,7 +45,7 @@ export default function Login() {
     }
   };
 
-  // Render the login screen
+  
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#154DC6" />
